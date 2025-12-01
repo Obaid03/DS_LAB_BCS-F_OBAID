@@ -53,15 +53,27 @@ class MaxHeap{
             size--;
             heapify_down(0);
         }
-        void Update_Key(int i,int val){
-            heap[i]=val;
-            if(val>heap[parent(i)]){
-                heapify_up(i);
+        
+        bool checkBT(){
+            for(int i=0;i<size;i++){
+                int l = left(i);
+                int r = right(i);
+                if(l < size && heap[i]<heap[l])
+                    return false;
+                if(r < size && heap[i]<heap[r])
+                    return false;
             }
-            else{
-                heapify_down(i);
+            return true;
+    }
+        void heapsort(){
+            int temp = size;
+            for(int i=size-1;i>0;i--){
+                swap(heap[0],heap[i]);
+                size--;
+                heapify_down(0);
             }
-        }
+            size = temp;
+    }
         void Display(){
             for(int i=0;i<size;i++){
                 cout<<"Element at index "<<i<<" -> "<<heap[i]<<endl;
@@ -76,6 +88,7 @@ int main(){
     h1.insert(5);
     h1.insert(4);
     h1.Display();
-    h1.Update_Key(1,9);
+    cout<<h1.checkBT()<<endl;
+    h1.heapsort();
     h1.Display();
 }
